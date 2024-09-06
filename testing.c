@@ -10,7 +10,7 @@ int main()
 
     // Takes the input from user
     scanf("%d", &arraySize);
-    printf(arraySize);
+    printf("%d", arraySize);
     return 0;
 }
 
