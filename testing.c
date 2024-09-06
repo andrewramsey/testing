@@ -5,7 +5,8 @@ int main()
     // Will determine array size user gives
     int arraySize;
 
-    printf("Start program", "\n");
+    printf("Start program");
+    printf("\n");
 
     // Asking for user input
     printf("Input array size: ");
