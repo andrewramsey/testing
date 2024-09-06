@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-int (main) 
+int main()
 {
     // Will determine array size user gives
     int arraySize;
