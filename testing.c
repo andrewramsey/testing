@@ -1,78 +1,72 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Function to multiply two numbers
+// The multiply function that will multiply the indices of arrays with each other
 int multiply(int a, int b) {
     return a * b;
 }
 
 int main() {
-    int *array1, *array2;
-    int size, i;
+    printf("Start program");
+    int size;
     FILE *fptr;
 
     // Ask the user for the size of the arrays
-    printf("Enter the size of the arrays: ");
-    scanf("%d", &size);
+    printf("Input array size: ");
+    scanf("%d", &size); // Takes user input and declares size as it, %d is int and the comma &size puts the int into the address of size
 
-    // Dynamically allocate memory for the arrays
-    array1 = (int *)malloc(size * sizeof(int));
-    array2 = (int *)malloc(size * sizeof(int));
+    // Creates arrays of ints using pointers and dynamically allocated memory, user input for size is the size of both arrays
+    int *array1 = (int *)malloc(size * sizeof(int));
+    int *array2 = (int *)malloc(size * sizeof(int));
 
-    if (array1 == NULL || array2 == NULL) {
-        printf("Memory not allocated.\n");
-        return 1;
-    }
+    // Print address of the first array
+    printf("Address array1 after allocation: %p\n", &array1);
 
-    // Print the address of the first array
-    printf("Address of the first array: %p\n", (void *)array1);
+    // Print size of array pointer in bytes, not the actual length of array
+    printf("Size of the array pointer: %zu \n", sizeof(array1)); // %zu is long unsigned int, using %d creates warnings
 
-    // Print the size of the array pointer
-    printf("Size of the array pointer: %zu bytes\n", sizeof(array1));
-
-    // Fill both arrays with user-provided values
-    printf("Enter elements for the first array:\n");
-    for (i = 0; i < size; i++) {
-        printf("Element %d: ", i + 1);
+    int i; // initialize i for loops
+    // Takes user input for each array element
+    printf("Input content of array1:\n");
+    for (i = 0; i < size; i++) 
+    {
+        printf("array1[%d]: ", i + 1);
         scanf("%d", &array1[i]);
     }
 
-    printf("Enter elements for the second array:\n");
-    for (i = 0; i < size; i++) {
-        printf("Element %d: ", i + 1);
+    printf("Input content for array2:\n");
+    for (i = 0; i < size; i++) 
+    {
+        printf("array2[%d]: ", i + 1);
         scanf("%d", &array2[i]);
     }
 
     // Open file to write results
     fptr = fopen("hw1_output.txt", "w");
-    if (fptr == NULL) {
-        printf("Error opening file!\n");
-        free(array1);
-        free(array2);
-        return 1;
-    }
 
+    printf("Multiplication start");
     // Perform multiplication and write to file
     for (i = 0; i < size; i++) {
-        int result = multiply(array1[i], array2[i]);
-        if (result % 2 == 0) {
-            fprintf(fptr, "Multiplication of %d and %d is %d (even)\n", array1[i], array2[i], result);
-        } else {
-            fprintf(fptr, "Multiplication of %d and %d is %d (odd)\n", array1[i], array2[i], result);
+        int product = multiply(array1[i], array2[i]);
+        if (product % 2 == 0) 
+        {
+            fprintf(fptr, "array1[%d] * array2[%d] = %d \n", i, i, product); // fprintf writes to file like printf
+            fprintf(fptr, " %d is an even number");
+        } 
+        else 
+        {
+            fprintf(fptr, "array1[%d] * array2[%d] = %d \n", i, i, product);
+            fprintf(fptr, " %d is an odd number");
         }
     }
+    printf("Multiplication done");
 
     // Close the file after writing
     fclose(fptr);
 
+    printf("Read file");
     // Open file to read and print its content
     fptr = fopen("hw1_output.txt", "r");
-    if (fptr == NULL) {
-        printf("Error opening file for reading!\n");
-        free(array1);
-        free(array2);
-        return 1;
-    }
 
     // Print the content of the file
     char ch;
@@ -88,5 +82,6 @@ int main() {
     free(array1);
     free(array2);
 
+    printf("End of program");
     return 0;
 }
