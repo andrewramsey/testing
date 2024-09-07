@@ -7,7 +7,7 @@ int multiply(int a, int b) {
 }
 
 int main() {
-    int *array1, *array2;
+    
     int size, i;
     FILE *fptr;
 
@@ -16,8 +16,8 @@ int main() {
     scanf("%d", &size);
 
     // Dynamically allocate memory for the arrays
-    array1 = (int *)malloc(size * sizeof(int));
-    array2 = (int *)malloc(size * sizeof(int));
+    int *array1[size];
+    int *array2[size];
 
     if (array1 == NULL || array2 == NULL) {
         printf("Memory not allocated.\n");
