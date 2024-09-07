@@ -7,7 +7,7 @@ int multiply(int a, int b) {
 }
 
 int main() {
-    printf("Start program");
+    printf("Start program \n");
     int size;
     FILE *fptr;
 
@@ -30,41 +30,41 @@ int main() {
     printf("Input content of array1:\n");
     for (i = 0; i < size; i++) 
     {
-        printf("array1[%d]: ", i + 1);
+        printf("array1[%d]: ", i);
         scanf("%d", &array1[i]);
     }
 
     printf("Input content for array2:\n");
     for (i = 0; i < size; i++) 
     {
-        printf("array2[%d]: ", i + 1);
+        printf("array2[%d]: ", i);
         scanf("%d", &array2[i]);
     }
 
     // Open file to write results
     fptr = fopen("hw1_output.txt", "w");
 
-    printf("Multiplication start");
+    printf("Multiplication start \n");
     // Perform multiplication and write to file
     for (i = 0; i < size; i++) {
         int product = multiply(array1[i], array2[i]);
         if (product % 2 == 0) 
         {
             fprintf(fptr, "array1[%d] * array2[%d] = %d \n", i, i, product); // fprintf writes to file like printf
-            fprintf(fptr, " %d is an even number");
+            fprintf(fptr, " %d is an even number", product);
         } 
         else 
         {
             fprintf(fptr, "array1[%d] * array2[%d] = %d \n", i, i, product);
-            fprintf(fptr, " %d is an odd number");
+            fprintf(fptr, " %d is an odd number", product);
         }
     }
-    printf("Multiplication done");
+    printf("Multiplication done\n");
 
     // Close the file after writing
     fclose(fptr);
 
-    printf("Read file");
+    printf("Read file\n");
     // Open file to read and print its content
     fptr = fopen("hw1_output.txt", "r");
 
@@ -82,6 +82,6 @@ int main() {
     free(array1);
     free(array2);
 
-    printf("End of program");
+    printf("End of program\n");
     return 0;
 }
