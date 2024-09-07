@@ -1,53 +1,92 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-void multiply(int* arr1, int* arr2, int arraySize);
-int main()
-{
-    // Will determine array size user gives
-    int arraySize = 0;
+// Function to multiply two numbers
+int multiply(int a, int b) {
+    return a * b;
+}
 
-    printf("Start program\n"); // has newline (\n)
+int main() {
+    int *array1, *array2;
+    int size, i;
+    FILE *fptr;
 
-    // Asking for user input
-    printf("Input array size: ");
+    // Ask the user for the size of the arrays
+    printf("Enter the size of the arrays: ");
+    scanf("%d", &size);
 
-    // Takes the input from user
-    scanf("%d", &arraySize);
-   
-   // Arrays start at index 0 so making arrays with arraysize as size argument makes it go to that int, not just size
-    arraySize = arraySize - 1; 
+    // Dynamically allocate memory for the arrays
+    array1 = (int *)malloc(size * sizeof(int));
+    array2 = (int *)malloc(size * sizeof(int));
 
-    // Creates two arrays 
-    int *arr1[arraySize];
-    int *arr2[arraySize];
-
-    // These two print information of the arrays
-    printf("Address of arr1 after allocation: %p\n ", &arr1); 
-    printf("Size of pointer arr1: %zu\n", sizeof(*arr1));
-
-    printf("Input content of arrays \n");
-    
-    // for loop that reads in input for every index of arr1 
-    int i;
-    for(i = 0; i <= arraySize; i++)
-    {
-        printf("Enter value of arr1[%d]: ", i);
-        scanf("%d", arr1[i]);
+    if (array1 == NULL || array2 == NULL) {
+        printf("Memory not allocated.\n");
+        return 1;
     }
 
-    
+    // Print the address of the first array
+    printf("Address of the first array: %p\n", (void *)array1);
 
-    // same for loop as above but uses input values for arr2
-    for(i = 0; i <= arraySize; i++)
-    {
-        printf("Enter value of arr2[%d]: ", i);
-        scanf("%d", arr2[i]);
+    // Print the size of the array pointer
+    printf("Size of the array pointer: %zu bytes\n", sizeof(array1));
+
+    // Fill both arrays with user-provided values
+    printf("Enter elements for the first array:\n");
+    for (i = 0; i < size; i++) {
+        printf("Element %d: ", i + 1);
+        scanf("%d", &array1[i]);
     }
 
-   multiply(arr1, arr2, arraySize);
+    printf("Enter elements for the second array:\n");
+    for (i = 0; i < size; i++) {
+        printf("Element %d: ", i + 1);
+        scanf("%d", &array2[i]);
+    }
 
+    // Open file to write results
+    fptr = fopen("hw1_output.txt", "w");
+    if (fptr == NULL) {
+        printf("Error opening file!\n");
+        free(array1);
+        free(array2);
+        return 1;
+    }
 
+    // Perform multiplication and write to file
+    for (i = 0; i < size; i++) {
+        int result = multiply(array1[i], array2[i]);
+        if (result % 2 == 0) {
+            fprintf(fptr, "Multiplication of %d and %d is %d (even)\n", array1[i], array2[i], result);
+        } else {
+            fprintf(fptr, "Multiplication of %d and %d is %d (odd)\n", array1[i], array2[i], result);
+        }
+    }
+
+    // Close the file after writing
+    fclose(fptr);
+
+    // Open file to read and print its content
+    fptr = fopen("hw1_output.txt", "r");
+    if (fptr == NULL) {
+        printf("Error opening file for reading!\n");
+        free(array1);
+        free(array2);
+        return 1;
+    }
+
+    // Print the content of the file
+    char ch;
+    printf("\nContents of the file 'hw1_output.txt':\n");
+    while ((ch = fgetc(fptr)) != EOF) {
+        putchar(ch);
+    }
+
+    // Close the file after reading
+    fclose(fptr);
+
+    // Free dynamically allocated memory
+    free(array1);
+    free(array2);
 
     return 0;
 }
