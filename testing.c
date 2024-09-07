@@ -19,8 +19,8 @@ int main()
     arraySize = arraySize - 1; 
 
     // Creates two arrays 
-    int* arr1 = (int *)malloc(arraySize * sizeof(int));
-    int* arr2 = (int *)malloc(arraySize * sizeof(int));
+    int *arr1[arraySize];
+    int *arr2[arraySize];
 
     // These two print information of the arrays
     printf("Address of arr1 after allocation: %p\n ", &arr1); 
